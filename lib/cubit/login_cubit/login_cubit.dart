@@ -11,22 +11,16 @@ class LoginCubit extends Cubit<LoginState> {
     emit(SignInLoading());
     try {
       // ignore: unused_local_variable
-      UserCredential userCredential =
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      await userCredential.user!.sendEmailVerification();
-      emit(SignInSuccess(
-          successMessage:
-          "Your account successfully created.\nPlease verify your email then Sign in."));
+      UserCredential user = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      emit(SignInSuccess(successMessage: "Successfully signed in."));
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        emit(SignInFailure(errorMessage: "The password provided is too weak."));
-      } else if (e.code == 'email-already-in-use') {
+      if (e.code == 'user-not-found') {
+        emit(SignInFailure(errorMessage: "No user found for that email."));
+      } else if (e.code == 'wrong-password') {
         // showSnackBar(context, );
         emit(SignInFailure(
-            errorMessage: "The account already exists for that email."));
+            errorMessage: "Wrong password provided for that user."));
       }
     } catch (e) {
       emit(SignInFailure(errorMessage: e.toString()));
