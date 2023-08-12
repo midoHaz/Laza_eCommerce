@@ -2,35 +2,34 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
-part 'login_state.dart';
+part 'sighup_state.dart';
 
-class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(LoginInitial());
-  Future<void> signInUser(
+class SignupCubit extends Cubit<SignupState> {
+  SignupCubit() : super(SignupInitial());
+  Future<void> signUpUser(
       {required String email, required String password}) async {
-    emit(SignInLoading());
+    emit(SignupLoading());
     try {
       // ignore: unused_local_variable
       UserCredential userCredential =
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       await userCredential.user!.sendEmailVerification();
-      emit(SignInSuccess(
+      emit(SignupSuccess(
           successMessage:
           "Your account successfully created.\nPlease verify your email then Sign in."));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        emit(SignInFailure(errorMessage: "The password provided is too weak."));
+        emit(SignupFailure(errorMessage: "The password provided is too weak."));
       } else if (e.code == 'email-already-in-use') {
         // showSnackBar(context, );
-        emit(SignInFailure(
+        emit(SignupFailure(
             errorMessage: "The account already exists for that email."));
       }
     } catch (e) {
-      emit(SignInFailure(errorMessage: e.toString()));
+      emit(SignupFailure(errorMessage: e.toString()));
     }
   }
-
 }

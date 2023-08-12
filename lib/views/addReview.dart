@@ -18,7 +18,7 @@ class _AddReviewState extends State<AddReview> {
   final _nameController = TextEditingController();
   final _descController = TextEditingController();
   final formkey=GlobalKey<FormState>();
-
+  double star =2;
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<LoginCubit>();
@@ -145,11 +145,14 @@ class _AddReviewState extends State<AddReview> {
                               return Slider(
                                   activeColor: primarycolor,
                                   inactiveColor: const Color(0xFFF5F6FA),
-                                  value: cubit.star,
+                                  value:star,
                                   max: 5.0,
                                   min: 0.0,
                                   onChanged: (value) {
-                                    cubit.changeStar(value);
+                                    star=value;
+                                    setState(() {
+
+                                    });
                                   });
                             },
                           ),

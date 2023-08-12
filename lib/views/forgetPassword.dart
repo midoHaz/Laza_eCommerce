@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:laza_commerce/Network/client_dio.dart';
+import 'package:laza_commerce/Reset_cubit/reset_cubit.dart';
 import 'package:laza_commerce/consts.dart';
 import 'package:laza_commerce/views/categories.dart';
 import 'package:laza_commerce/views/Login.dart';
+import 'package:laza_commerce/views/snackBar.dart';
 import 'package:laza_commerce/views/verifecation.dart';
 
 class Forget extends StatefulWidget {
@@ -15,10 +18,23 @@ class Forget extends StatefulWidget {
 class _ForgetState extends State<Forget> {
   final _emailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  bool isLoading=false;
+  bool _isLoading=false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<ResetCubit, ResetState>(
+  listener: (context, state) {
+    if (state is ResetLoading) {
+      _isLoading = true;
+    } else if (state is ResetSuccess) {
+      _isLoading = false;
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>const Verifecation()));
+      showSnackBar(context, state.successMessage);
+    } else if (state is ResetFailure) {
+      showSnackBar(context, state.errorMessage);
+      _isLoading = false;
+    }
+  },
+  child: Scaffold(
       body: Form(
         key: formKey,
         child: SafeArea(
@@ -96,7 +112,10 @@ class _ForgetState extends State<Forget> {
                  InkWell(
                     onTap: () async {
                       if(formKey.currentState!.validate()){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Verifecation()));
+                        BlocProvider.of<ResetCubit>(context)
+                            .resetPassword(
+                           emailController: _emailController,
+                        );
                       }
                     },
                     child: Container(
@@ -116,7 +135,8 @@ class _ForgetState extends State<Forget> {
           ),
         ),
       ),
-    );
+    ),
+);
   }
   Widget TextFieldModel({
     required String title,

@@ -2,11 +2,14 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:laza_commerce/consts.dart';
 import 'package:laza_commerce/dark_cubit/dark_cubit.dart';
 import 'package:laza_commerce/language_cubit/language_cubit.dart';
 import 'package:laza_commerce/views/Card_Screen.dart';
 import 'package:laza_commerce/views/allCategories.dart';
+import 'package:laza_commerce/views/dashboard.dart';
 import 'package:laza_commerce/views/itemDetails.dart';
 
 class Categories extends StatefulWidget {
@@ -431,18 +434,23 @@ class _CategoriesState extends State<Categories> {
               const SizedBox(
                 height: 80,
               ),
-              const ListTile(
-                leading: Icon(
-                  Icons.login_outlined,
-                  color: Color(0xffFF5757),
-                  size: 25,
-                ),
-                title: Text(
-                  "Log Out",
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xffFF5757)
+              GestureDetector(
+                onTap: (){
+                  Get.offAll(const Dash());
+                },
+                child: const ListTile(
+                  leading: Icon(
+                    Icons.login_outlined,
+                    color: Color(0xffFF5757),
+                    size: 25,
+                  ),
+                  title: Text(
+                    "Log Out",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xffFF5757)
+                    ),
                   ),
                 ),
               ),

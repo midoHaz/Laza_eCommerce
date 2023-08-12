@@ -5,6 +5,8 @@ import 'package:laza_commerce/consts.dart';
 import 'package:laza_commerce/cubit/login_cubit.dart';
 import 'package:laza_commerce/views/categories.dart';
 import 'package:laza_commerce/views/forgetPassword.dart';
+import 'package:laza_commerce/views/layout_screen.dart';
+import 'package:laza_commerce/views/snackBar.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -18,11 +20,25 @@ class _LoginState extends State<Login> {
   final _passwordController = TextEditingController();
   bool checkedValue = false;
   bool isLoading = false;
+  bool _isLoading=false;
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<LoginCubit, LoginState>(
+  listener: (context, state) {
+    if (state is SignInLoading) {
+      _isLoading = true;
+    } else if (state is SignInSuccess) {
+      _isLoading = false;
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>const LayoutScreen()));
+      showSnackBar(context, state.successMessage);
+    } else if (state is SignInFailure) {
+      showSnackBar(context, state.errorMessage);
+      _isLoading = false;
+    }
+  },
+  child: Scaffold(
       body: Form(
         key: formKey,
         child: SafeArea(
@@ -168,15 +184,13 @@ class _LoginState extends State<Login> {
                     width: MediaQuery.of(context).size.width,
                     child: InkWell(
                       onTap: () async {
-                        isLoading = true;
-                        setState(() {});
                         if (formKey.currentState!.validate()) {
-                          await DioHelper().login(
-                              email: _emailController.text,
-                              password: _passwordController.text);
+                          BlocProvider.of<LoginCubit>(context)
+                              .signInUser(
+                            email: _emailController.text,
+                            password:_passwordController.text,
+                          );
                         }
-                        isLoading = false;
-                        setState(() {});
                       },
                       child: Container(
                         height: 80,
@@ -196,7 +210,8 @@ class _LoginState extends State<Login> {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 
   Widget TextFieldModel({

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:laza_commerce/consts.dart';
+import 'package:laza_commerce/views/Card_Screen.dart';
 import 'package:laza_commerce/views/categories.dart';
 
 class AllCategories extends StatefulWidget {
@@ -104,7 +107,9 @@ class _AllCategoriesState extends State<AllCategories> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(const CardScreen());
+              },
               style: ElevatedButton.styleFrom(
                   backgroundColor:primarycolor),
               child:const Padding(

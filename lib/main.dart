@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -7,11 +8,14 @@ import 'package:laza_commerce/Helper/hive_adapter.dart';
 import 'package:laza_commerce/Helper/hive_database.dart';
 import 'package:laza_commerce/Helper/hive_helper.dart';
 import 'package:laza_commerce/Network/client_dio.dart';
+import 'package:laza_commerce/Reset_cubit/reset_cubit.dart';
 import 'package:laza_commerce/card_cubit/card_cubit.dart';
 import 'package:laza_commerce/consts.dart';
 import 'package:laza_commerce/cubit/login_cubit.dart';
 import 'package:laza_commerce/dark_cubit/dark_cubit.dart';
+import 'package:laza_commerce/firebase_options.dart';
 import 'package:laza_commerce/language_cubit/language_cubit.dart';
+import 'package:laza_commerce/sighup_cubit/sighup_cubit.dart';
 import 'package:laza_commerce/views/Home.dart';
 import 'package:laza_commerce/views/categories.dart';
 import 'package:laza_commerce/views/forgetPassword.dart';
@@ -21,6 +25,10 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ReviewAdapter());
   await Hive.openBox(reviews);
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -33,10 +41,13 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => LanguageCubit(),
-        ),
+          create: (context) => SignupCubit(),),
+        BlocProvider(
+          create: (context) => LanguageCubit(),),
         BlocProvider(
           create: (context) => LoginCubit(),),
+        BlocProvider(
+          create: (context) => ResetCubit(),),
         BlocProvider(
           create: (context) => DarkCubit(),),
         BlocProvider(
