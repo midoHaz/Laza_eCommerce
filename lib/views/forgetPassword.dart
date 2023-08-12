@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:laza_commerce/Network/client_dio.dart';
-import 'package:laza_commerce/Reset_cubit/reset_cubit.dart';
 import 'package:laza_commerce/consts.dart';
+import 'package:laza_commerce/cubit/Reset_cubit/reset_cubit.dart';
 import 'package:laza_commerce/views/categories.dart';
 import 'package:laza_commerce/views/Login.dart';
 import 'package:laza_commerce/views/snackBar.dart';
@@ -68,7 +68,8 @@ class _ForgetState extends State<Forget> {
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 28,
-                          color: Color(0xFF1D1E20)),
+                          // color: Color(0xFF1D1E20)
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),

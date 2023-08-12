@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:laza_commerce/card_cubit/card_cubit.dart';
 import 'package:laza_commerce/consts.dart';
+import 'package:laza_commerce/cubit/card_cubit/card_cubit.dart';
 import 'package:laza_commerce/views/layout_screen.dart';
 import 'package:laza_commerce/views/order_confirm.dart';
 

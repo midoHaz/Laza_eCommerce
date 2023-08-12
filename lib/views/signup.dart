@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:laza_commerce/Network/client_dio.dart';
 import 'package:laza_commerce/consts.dart';
-import 'package:laza_commerce/sighup_cubit/sighup_cubit.dart';
+import 'package:laza_commerce/cubit/sighup_cubit/sighup_cubit.dart';
 import 'package:laza_commerce/views/Login.dart';
 import 'package:laza_commerce/views/snackBar.dart';
 
@@ -75,7 +75,8 @@ class _SignUpState extends State<SignUp> {
                           child: Text("sign up",
                             // (AppLocalizations.of(context)!.signup),
                             style: TextStyle(fontWeight: FontWeight.bold,
-                                fontSize: 28, color: Color(0xFF1D1E20)
+                                fontSize: 28,
+                                // color: Color(0xFF1D1E20)
                             ),),
                         ),
                         SizedBox(
@@ -172,14 +173,11 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 Positioned(bottom: 0,
-                    child: isLoading
+                    child: _isLoading
                         ? const Center(
                         child: CircularProgressIndicator(color: primarycolor))
                         : Container(
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
+                      width: MediaQuery.sizeOf(context).width,
                       child: Center(
                         child: InkWell(
                           onTap: () async {

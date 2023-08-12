@@ -4,7 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:laza_commerce/Helper/hive_helper.dart';
 import 'package:laza_commerce/consts.dart';
-import 'package:laza_commerce/cubit/login_cubit.dart';
+import 'package:laza_commerce/cubit/login_cubit/login_cubit.dart';
 import 'package:laza_commerce/views/showReviews.dart';
 
 class AddReview extends StatefulWidget {

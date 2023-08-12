@@ -34,7 +34,8 @@ class Dash extends StatelessWidget {
                  child: Text('Let\'s Get Started'
                    // (AppLocalizations.of(context)!.started)
                    ,style: TextStyle(fontWeight: FontWeight.bold,
-                      fontSize: 28,color: Color(0xFF1D1E20)
+                      fontSize: 28,
+                       // color: Color(0xFF1D1E20)
                   ),),
                ),
                 const SizedBox(
@@ -87,7 +88,7 @@ class Dash extends StatelessWidget {
                             'Signin',
                             // (AppLocalizations.of(context)!.signin),
                             style: TextStyle(
-                              color: Color(0xFF1D1E20),
+                              // color: Color(0xFF1D1E20),
                               fontSize: 17,
                               fontWeight: FontWeight.bold,
                             ),

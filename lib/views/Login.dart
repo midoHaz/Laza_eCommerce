@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:laza_commerce/Network/client_dio.dart';
 import 'package:laza_commerce/consts.dart';
-import 'package:laza_commerce/cubit/login_cubit.dart';
+import 'package:laza_commerce/cubit/login_cubit/login_cubit.dart';
 import 'package:laza_commerce/views/categories.dart';
 import 'package:laza_commerce/views/forgetPassword.dart';
 import 'package:laza_commerce/views/layout_screen.dart';
@@ -75,7 +75,8 @@ class _LoginState extends State<Login> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 28,
-                              color: Color(0xFF1D1E20)),
+                              // color: Color(0xFF1D1E20)
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(
@@ -177,7 +178,7 @@ class _LoginState extends State<Login> {
                   const SizedBox(
                     height: 20,
                   ),
-                  isLoading
+                  _isLoading
                       ? const Center(
                       child: CircularProgressIndicator(color: primarycolor))
                       : Container(
